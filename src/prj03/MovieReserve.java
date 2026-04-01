@@ -15,6 +15,32 @@ package prj03;
 // 선형자료구조인 ArrayList 를 사용하여 전체 데이터를 한번에 처리한다
 // 자료의 순서를 최종결제금액 기준 내림차순으로 정렬하여 출력
 
+/*
+T1001,유지호,A1,2,12000.0,M
+T1002,한예린,R1,3,14000.0,D
+T1003,송민준,H1,1,15000.0,N
+*/
+
+class Ipo {
+	void		input();
+	void		process();
+	void		output();
+}
+
+class movieVo{
+	// Field
+	// 입력data : 예매번호,이름,영화코드,관람인원,기본요금,시간대코드
+	//				num    name  mvCode   person   charge   tCode
+	// 출력     : 예매번호,이름,영화명,총요금,할증액,최종결제금액,시간대명
+	//				num    name  mvName  kum   fee    totKum		tName
+	private		String		num;
+	private		String		name;  mvCode   person   charge   tCode	
+	
+}
+
+class mvReserve implements Ipo {
+	
+} 
 
 public class MovieReserve {
 
