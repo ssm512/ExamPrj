@@ -4,6 +4,7 @@ package prj03;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 // 총요금       = 기본요금 * 관람인원
@@ -31,7 +32,7 @@ interface Ipo {
 	void		output();
 }
 
-class movieVo{
+class MovieVo{
 	// Field
 	// 입력data : 예매번호,이름,영화코드,관람인원,기본요금,시간대코드
 	//				num    name  mvCode   person   charge   tCode
@@ -53,7 +54,7 @@ class movieVo{
 	private		double		totKum;
 	private		String		tName;
 	//Constructor
-	public movieVo(String num, String name, String mvCode, int person, double charge, char tCode) {
+	public MovieVo(String num, String name, String mvCode, int person, double charge, char tCode) {
 		this.num = num;
 		this.name = name;
 		this.mvCode = mvCode;
@@ -135,11 +136,27 @@ class movieVo{
 				+ charge + ", tCode=" + tCode + ", mvName=" + mvName + ", kum=" + kum + ", fee=" + fee + ", totKum="
 				+ totKum + ", tName=" + tName + "]";
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(mvCode, mvName, tCode, tName);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MovieVo other = (MovieVo) obj;
+		return Objects.equals(mvCode, other.mvCode) && Objects.equals(mvName, other.mvName) && tCode == other.tCode
+				&& Objects.equals(tName, other.tName);
+	}
 }
 
 class MvReserve implements Ipo {
 	
-	List<movieVo> 	movieList	=	new ArrayList<>();
+	List<MovieVo> 	movieList	=	new ArrayList<>();
 
 	@Override
 	public void input() {
@@ -150,8 +167,30 @@ class MvReserve implements Ipo {
 		T1002,한예린,R1,3,14000.0,D
 		T1003,송민준,H1,1,15000.0,N
 		*/
+		// 입력data : 예매번호,이름,영화코드,관람인원,기본요금,시간대코드
+		//				num    name  mvCode   person   charge   tCode
+		int		i	=	0;
+		while (true) {
+			String		line	=	in.nextLine();
+			if (line.equals("quit") ) {
+				System.out.println();
+				break;
+			}
+			String	[]	li		=	line.trim().split(",");
+			String		num		=	li[0].trim();
+			String		name	=	li[1].trim();
+			String		mvCode	=	li[2].trim();	
+			int			person	=	Integer.parseInt(li[3].trim());
+			double		charge	=	Double.parseDouble(li[4].trim());
+			char		tCode	=	li[5].toUpperCase().charAt(0);
+			MovieVo	movieVo	=	new	MovieVo(num, name, mvCode, person, charge, tCode);
+			movieList.add(movieVo);
+			System.out.println(movieList.get(i));
+			i++;
+		}
 		
-	}
+		
+	}// input() end
 
 	@Override
 	public void process() {
