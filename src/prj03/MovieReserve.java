@@ -215,7 +215,7 @@ class MvReserve implements Ipo {
 			System.out.println(movieList.get(i));
 			i++;
 		}
-		System.out.println("-----------------------");
+		//System.out.println("-----------------------");
 
 	}// input() end
 
