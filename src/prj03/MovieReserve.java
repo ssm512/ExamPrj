@@ -1,5 +1,6 @@
 package prj03;
 // 입력data : 예매번호,이름,영화코드,관람인원,기본요금,시간대코드
+
 // 출력     : 예매번호,이름,영화명,총요금,할증액,최종결제금액,시간대명
 
 import java.util.ArrayList;
@@ -27,33 +28,36 @@ T1003,송민준,H1,1,15000.0,N
 */
 
 interface Ipo {
-	void		input();
-	void		process();
-	void		output();
+	void input();
+
+	void process();
+
+	void output();
 }
 
-class MovieVo{
+class MovieVo {
 	// Field
 	// 입력data : 예매번호,이름,영화코드,관람인원,기본요금,시간대코드
-	//				num    name  mvCode   person   charge   tCode
-	// 출력     : 예매번호,이름,영화명,총요금,할증액,최종결제금액,시간대명
-	//				num    name  mvName  kum   fee    totKum		tName
-	
+	// num name mvCode person charge tCode
+	// 출력 : 예매번호,이름,영화명,총요금,할증액,최종결제금액,시간대명
+	// num name mvName kum fee totKum tName
+
 	// 입력
-	private		String		num;
-	private		String		name; 
-	private		String		mvCode;
-	private		int			person;
-	private		double		charge;
-	private		char		tCode;	
+	private String num;
+	private String name;
+	private String mvCode;
+	private int person;
+	private double charge;
+	private char tCode;
 	// 출력
-	// mvName  kum   fee    totKum		tName
-	private		String		mvName;
-	private		double		kum;
-	private		double		fee;
-	private		double		totKum;
-	private		String		tName;
-	//Constructor
+	// mvName kum fee totKum tName
+	private String mvName;
+	private double kum;
+	private double fee;
+	private double totKum;
+	private String tName;
+
+	// Constructor
 	public MovieVo(String num, String name, String mvCode, int person, double charge, char tCode) {
 		this.num = num;
 		this.name = name;
@@ -62,84 +66,109 @@ class MovieVo{
 		this.charge = charge;
 		this.tCode = tCode;
 	}
-	//method
+
+	// method
 	public String getNum() {
 		return num;
 	}
+
 	public void setNum(String num) {
 		this.num = num;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getMvCode() {
 		return mvCode;
 	}
+
 	public void setMvCode(String mvCode) {
 		this.mvCode = mvCode;
 	}
+
 	public int getPerson() {
 		return person;
 	}
+
 	public void setPerson(int person) {
 		this.person = person;
 	}
+
 	public double getCharge() {
 		return charge;
 	}
+
 	public void setCharge(double charge) {
 		this.charge = charge;
 	}
+
 	public char gettCode() {
 		return tCode;
 	}
+
 	public void settCode(char tCode) {
 		this.tCode = tCode;
 	}
+
 	public String getMvName() {
 		return mvName;
 	}
+
 	public void setMvName(String mvName) {
 		this.mvName = mvName;
 	}
+
 	public double getKum() {
 		return kum;
 	}
+
 	public void setKum(double kum) {
 		this.kum = kum;
 	}
+
 	public double getFee() {
 		return fee;
 	}
+
 	public void setFee(double fee) {
 		this.fee = fee;
 	}
+
 	public double getTotKum() {
 		return totKum;
 	}
+
 	public void setTotKum(double totKum) {
 		this.totKum = totKum;
 	}
+
 	public String gettName() {
 		return tName;
 	}
+
 	public void settName(String tName) {
 		this.tName = tName;
 	}
-	//toString
+
+	// toString
 	@Override
 	public String toString() {
 		return "movieVo [num=" + num + ", name=" + name + ", mvCode=" + mvCode + ", person=" + person + ", charge="
 				+ charge + ", tCode=" + tCode + ", mvName=" + mvName + ", kum=" + kum + ", fee=" + fee + ", totKum="
 				+ totKum + ", tName=" + tName + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(mvCode, mvName, tCode, tName);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -155,72 +184,120 @@ class MovieVo{
 }
 
 class MvReserve implements Ipo {
-	
-	List<MovieVo> 	movieList	=	new ArrayList<>();
+
+	List<MovieVo> movieList = new ArrayList<>();
 
 	@Override
 	public void input() {
-		Scanner	in	=	new	Scanner(System.in);
+		Scanner in = new Scanner(System.in);
 		System.out.println("예매번호 이름 영화코드 관람인원 기본요금 시간대코드");
 		/*
-		T1001,유지호,A1,2,12000.0,M
-		T1002,한예린,R1,3,14000.0,D
-		T1003,송민준,H1,1,15000.0,N
-		*/
+		 * T1001,유지호,A1,2,12000.0,M T1002,한예린,R1,3,14000.0,D T1003,송민준,H1,1,15000.0,N
+		 */
 		// 입력data : 예매번호,이름,영화코드,관람인원,기본요금,시간대코드
-		//				num    name  mvCode   person   charge   tCode
-		int		i	=	0;
+		// num name mvCode person charge tCode
+		int i = 0;
 		while (true) {
-			String		line	=	in.nextLine();
-			if (line.equals("quit") ) {
+			String line = in.nextLine();
+			if (line.equals("q")) {
 				System.out.println();
 				break;
 			}
-			String	[]	li		=	line.trim().split(",");
-			String		num		=	li[0].trim();
-			String		name	=	li[1].trim();
-			String		mvCode	=	li[2].trim();	
-			int			person	=	Integer.parseInt(li[3].trim());
-			double		charge	=	Double.parseDouble(li[4].trim());
-			char		tCode	=	li[5].toUpperCase().charAt(0);
-			MovieVo	movieVo	=	new	MovieVo(num, name, mvCode, person, charge, tCode);
+			String[] li = line.trim().split(",");
+			String num = li[0].trim();
+			String name = li[1].trim();
+			String mvCode = li[2].trim();
+			int person = Integer.parseInt(li[3].trim());
+			double charge = Double.parseDouble(li[4].trim());
+			char tCode = li[5].toUpperCase().charAt(0);
+			MovieVo movieVo = new MovieVo(num, name, mvCode, person, charge, tCode);
 			movieList.add(movieVo);
 			System.out.println(movieList.get(i));
 			i++;
 		}
-		
-		
+		System.out.println("-----------------------");
+
 	}// input() end
 
 	@Override
 	public void process() {
-
+		// 입력data : 예매번호,이름,영화코드,관람인원,기본요금,시간대코드
+		//				num    name  mvCode   person   charge   tCode
+		/*
+		T1001,유지호,A1,2,12000.0,M
+		T1002,한예린,R1,3,14000.0,D
+		T1003,송민준,H1,1,15000.0,N
+		private		String		num;
+	private		String		name; 
+	private		String		mvCode;
+	private		int			person;
+	private		double		charge;
+	private		char		tCode;
+		*/
 		// 총요금       = 기본요금 * 관람인원
 		// 할증액       = 시간대코드에 따라 총요금의 비율 적용
 		//		               M:조조 0%, D:일반 5%, N:심야 10%
 		// 최종결제금액 = 총요금 + 할증액
 		// 영화명       = A1:액션대작, R1:로맨스극장, C1:코미디쇼, H1:공포특집
 		// 시간대명     = M:조조, D:일반, N:심야
-	}
+
+		for (int i = 0; i < movieList.size(); i++) {
+			MovieVo vo	=	movieList.get(i);
+			vo.setKum(vo.getCharge()*vo.getPerson()); // 총금액(kum) 계산
+			
+			switch (vo.gettCode()) {
+			case 'M': vo.settName("조조"); vo.setFee(0.0); break;
+			case 'D': vo.settName("일반"); vo.setFee(0.05); break;
+			case 'N': vo.settName("심야"); vo.setFee(0.10); break;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + vo.gettCode());
+			} // switch문 시간대명, 할증액 end
+			double		fee		=	vo.getKum() * vo.getFee();
+			vo.setTotKum(vo.getKum()+ fee );
+			
+			
+			switch (vo.getMvCode()) {
+			case "A1": vo.setMvName("액션대작"); break; 
+			case "R1": vo.setMvName("로멘스극장"); break;
+			case "C1": vo.setMvName("코미디쇼"); break;
+			case "H1": vo.setMvName("공포특집"); break;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + vo.getMvCode());
+			} // switch문 영화명 end
+						
+			
+		} // for end
+		
+	} // process() end
 
 	@Override
 	public void output() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-} 
+		// 출력 : 예매번호,이름,영화명,총요금,할증액,최종결제금액,시간대명
+		// num name mvName kum fee totKum tName
+		/*
+		 * private String mvName; private double kum; private double fee; private double
+		 * totKum; private String tName;
+		 */
+		String title = "예매번호 이름 영화명 총요금 할증액 최종결제금액 시간대명";
+		System.out.println(title);
+
+		for (MovieVo movieVo : movieList) {
+			String fmt = "%s %s %s %.2f %.2f %.2f %s\n";
+			System.out.printf(fmt, movieVo.getNum(), movieVo.getName(), movieVo.getMvName(), movieVo.getKum(),
+					movieVo.getFee(), movieVo.getTotKum(), movieVo.gettName());
+		}
+	} // output() end
+
+}
 
 public class MovieReserve {
 
 	public static void main(String[] args) {
-		
-		MvReserve mvReserve	=	new	MvReserve ();
+
+		MvReserve mvReserve = new MvReserve();
 		mvReserve.input();
 		mvReserve.process();
 		mvReserve.output();
-		
 
 	} // main end
 
