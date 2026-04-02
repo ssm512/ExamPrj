@@ -178,7 +178,6 @@ class MvReserve implements Ipo {
 			char tCode = li[5].toUpperCase().charAt(0);
 			MovieVo movieVo = new MovieVo(num, name, mvCode, person, charge, tCode);
 			movieList.add(movieVo);
-			System.out.println(movieList.get(i));
 			i++;
 		} // while end
 	}// input() end

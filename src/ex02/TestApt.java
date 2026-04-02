@@ -127,7 +127,6 @@ class AptUse implements Ipo {
 			char 		sCode 			= li[5].toUpperCase().charAt(0);
 			AptVo 		aptVo 			= new AptVo(name, name, person, person, charge, sCode);
 			aptList.add(aptVo);
-			System.out.println(aptList.get(i));
 			i++;
 		} //while end
 	} // input() end

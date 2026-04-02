@@ -123,7 +123,6 @@ class BookRes implements Ipo {
 			char mCode = li[5].toUpperCase().charAt(0);
 			BookVo bookVo = new BookVo(num, name, bookName, entDay, turnDay, mCode);
 			bookList.add(bookVo);
-			System.out.println(bookList.get(i));
 			i++;
 		} //while end
 		
