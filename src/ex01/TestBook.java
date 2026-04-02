@@ -1,26 +1,11 @@
 package ex01;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-
-//입력data : 회원번호,이름,도서명,대출일,반납예정일,회원구분
-//출력     : 회원번호,이름,도서명,대출일수,대출등급,회원구분명
-
-//대출일수 = 현재날짜 기준으로 대출일로부터 지난 일수
-//대출등급 = 7일 이하 정상, 8~14일 주의, 15일 이상 연체
-//회원구분명 = A:일반회원, B:우수회원, C:특별회원
-
-//날짜 형식은 yyyyMMdd
-//모든 기능은 class에 구현한다.
-//입력 DATA 1줄을 입력받고  결과 1줄로 출력합니다
-
-/*
-101,최수빈,자바의정석,20260110,20260117,A
-102,한지호,스프링입문,20260201,20260208,B
-103,오세라,파이썬기초,20260301,20260308,C
-*/
 
 interface Ipo {
 	void		input();
@@ -29,17 +14,16 @@ interface Ipo {
 } // interface Ipo end
 
 class BookVo {
-	//입력data : 회원번호,이름,도서명,대출일,반납예정일,회원구분
-	//			num		name	bookName  	entDay  turnDay  mCode
+	// Field
+	// 입력
 	private	String		num;		
 	private	String		name;
 	private	String		bookName; 
 	private	String		entDay;
 	private	String		turnDay;
 	private	char		mCode;
-	//출력     : 회원번호,이름,도서명,대출일수,대출등급,회원구분명
-	//			num		name	bookName	ingDay	entGrade	mName
-	private	String		ingDay;
+	//출력
+	private	int			ingDay;
 	private	String		entGrade;
 	private	String		mName;
 	//Constructor
@@ -89,10 +73,10 @@ class BookVo {
 	public void setmCode(char mCode) {
 		this.mCode = mCode;
 	}
-	public String getIngDay() {
+	public int getIngDay() {
 		return ingDay;
 	}
-	public void setIngDay(String ingDay) {
+	public void setIngDay(int ingDay) {
 		this.ingDay = ingDay;
 	}
 	public String getEntGrade() {
@@ -129,7 +113,7 @@ class BookRes implements Ipo {
 			if (line.equals("q")) {
 				System.out.println();
 				break;
-			}
+			} // if end
 			String[] li = line.trim().split(",");
 			String num = li[0].trim();
 			String name = li[1].trim();
@@ -141,42 +125,55 @@ class BookRes implements Ipo {
 			bookList.add(bookVo);
 			System.out.println(bookList.get(i));
 			i++;
-		}
-	}
+		} //while end
+		
+	} // input() end
 
 	@Override
 	public void process() {
-		/*
-		101,최수빈,자바의정석,20260110,20260117,A
-		102,한지호,스프링입문,20260201,20260208,B
-		103,오세라,파이썬기초,20260301,20260308,C
-		*/
-		//입력data : 회원번호,이름,도서명,대출일,반납예정일,회원구분
-		//			num		name	bookName  	entDay  turnDay  mCode
-		//대출일수 = 현재날짜 기준으로 대출일로부터 지난 일수
-		//대출등급 = 7일 이하 정상, 8~14일 주의, 15일 이상 연체
-		//회원구분명 = A:일반회원, B:우수회원, C:특별회원
-
-		//날짜 형식은 yyyyMMdd
-		//모든 기능은 class에 구현한다.
-		//입력 DATA 1줄을 입력받고  결과 1줄로 출력합니다
-		//출력     : 회원번호,이름,도서명,대출일수,대출등급,회원구분명
-		//			num		name	bookName	ingDay	entGrade	mName
-
-		
-	}
+		LocalDate	today	=	LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		for (int i = 0; i < bookList.size(); i++) {
+			BookVo vo				=	bookList.get(i);
+			String	entDay			=	vo.getEntDay();	
+			LocalDate entDay2 		= LocalDate.parse(entDay, formatter);
+			long days = ChronoUnit.DAYS.between(today, entDay2);
+			//System.out.println(entDay2);
+			//System.out.println(today);
+			//System.out.println(days);
+			int		day				=	(int)days;
+			vo.setIngDay(day);
+			if ( vo.getIngDay() <= 7 ) { vo.setEntGrade("정상"); }
+			if ( vo.getIngDay() >=8 && vo.getIngDay()<=14 ) { vo.setEntGrade("주의");}
+			if ( vo.getIngDay() >= 15 ) { vo.setEntGrade("연체"); }
+			switch ( vo.getmCode() ) {
+			case 'A': vo.setmName("일반회원"); break;
+			case 'B': vo.setmName("우수회원"); break;
+			case 'C': vo.setmName("특별회원"); break;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + vo.getmCode());
+			} // switch end
+		} // for end
+	} // process() end
 
 	@Override
 	public void output() {
+		String title = "회원번호 이름 도서명 대출일수 대출등급 회원구분명";
+		System.out.println(title);
 
-		
-	}
+		for (BookVo bookVo : bookList) {
+			String fmt = "%s %s %s %d %s %s\n";
+			System.out.printf(fmt, bookVo.getNum(), bookVo.getName(), bookVo.getBookName(), bookVo.getIngDay(), bookVo.getEntGrade(), bookVo.getmName());
+			//System.out.println(bookVo.getIngDay());
+		} // for end
+	} // output() end
 	
 } // class BookRes end
 
 public class TestBook {
 
 	public static void main(String[] args) {
+		
 		BookRes bookRes	=	new	BookRes();
 		bookRes.input();
 		bookRes.process();

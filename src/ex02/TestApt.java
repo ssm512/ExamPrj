@@ -1,23 +1,9 @@
 package ex02;
-//입력data : 동호수,세대주명,전기사용량,수도사용량,기본관리비,평형코드
-//출력     : 동호수,세대주명,전기요금,수도요금,총관리비,평형명
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-
-//전기요금 = 전기사용량 * 120
-//수도요금 = 수도사용량 * 900
-//총관리비 = 기본관리비 + 전기요금 + 수도요금
-//평형명   = A:20평형, B:30평형, C:40평형, D:50평형
-
-// 금액은 소수이하 두자리로 반올림
-// 모든 기능은 class에 구현한다.
-// 선형자료구조인 ArrayList 를 사용하여 전체 데이터를 한번에 처리한다
-
-/*
-101-1201,김도윤,250,18,50000,A
-102-1502,이하린,310,22,65000,B
-103-1803,박서아,420,30,80000,C
-*/
 interface Ipo {
 	void		input();
 	void		process();
@@ -25,16 +11,15 @@ interface Ipo {
 } // interface Ipo end
 
 class AptVo {
-	//입력data : 동호수,세대주명,전기사용량,수도사용량,기본관리비,평형코드
-	//			dong	name	elUsage		waUsage		charge		sCode
+	// Field
+	// 입력
 	private	String		dong;
 	private	String		name;
 	private	int			elUsage;
 	private	int			waUsage;
 	private	double		charge;
 	private	char		sCode;
-	//출력     : 동호수,세대주명,전기요금,수도요금,총관리비,평형명
-	//			dong	name	elFee	waFee	totCharge	sName
+	//출력
 	private	double		elFee;
 	private	double		waFee;
 	private	double		totCharge;
@@ -47,7 +32,7 @@ class AptVo {
 		this.waUsage = waUsage;
 		this.charge = charge;
 		this.sCode = sCode;
-	}
+	} 
 	//method
 	// getter & setter
 	public String getDong() {
@@ -120,29 +105,69 @@ class AptVo {
 } // class AptVo end
 
 class AptUse implements Ipo {
-	
+		List<AptVo> aptList	=	new	ArrayList<>();
+		
 	@Override
 	public void input() {
-
-		
-	}
-
+		Scanner		in		=	new	Scanner(System.in);
+		System.out.println("동호수 세대주명 전기사용량 수도사용량 기본관리비 평형코드");
+		int i = 0;
+		while (true) {
+			String line = in.nextLine();
+			if (line.equals("q")) {
+				System.out.println();
+				break;
+			} // if end
+			String	[] li 				= line.trim().split(",");
+			String 		dong 			= li[0].trim();
+			String 		name 			= li[1].trim();
+			int 		elUsage 		= Integer.parseInt(li[2].trim());
+			int 		person 			= Integer.parseInt(li[3].trim());
+			double 		charge 			= Double.parseDouble(li[4].trim());
+			char 		sCode 			= li[5].toUpperCase().charAt(0);
+			AptVo 		aptVo 			= new AptVo(name, name, person, person, charge, sCode);
+			aptList.add(aptVo);
+			System.out.println(aptList.get(i));
+			i++;
+		} //while end
+	} // input() end
+	
 	@Override
 	public void process() {
-		// TODO Auto-generated method stub
-		
-	}
+		for (int i = 0; i < aptList.size(); i++) {
+			AptVo	vo	=	aptList.get(i);
+			vo.setElFee(vo.getElUsage() * 120.0);
+			vo.setWaFee(vo.getWaUsage() * 900.0);
+			vo.setTotCharge(vo.getCharge() + vo.getElFee() + vo.getWaFee());
+			switch ( vo.getsCode()) {
+			case 'A': vo.setsName("20평형");break;
+			case 'B': vo.setsName("30평형");break;
+			case 'C': vo.setsName("40평형");break;
+			case 'D': vo.setsName("50평형");break;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " +  vo.getsCode());
+			} // switch end
+		} // for end
+	} // process() end
 
 	@Override
 	public void output() {
-		// TODO Auto-generated method stub
-		
-	}} // class AptUse end
+		String title = "동호수 세대주명 전기요금 수도요금 총관리비 평형명";
+		System.out.println(title);
+		for (AptVo aptVo : aptList) {
+			String fmt = "%s %s %.2f %.2f %.2f %s\n";
+			System.out.printf(fmt, aptVo.getDong(), aptVo.getName(), aptVo.getElFee(), aptVo.getWaFee(), aptVo.getTotCharge(), aptVo.getsName());
+		} // for end
+	} //output() end
+} // class AptUse end
 
 public class TestApt {
 
 	public static void main(String[] args) {
-		
+		AptUse	aptuse	=	new	AptUse();
+		aptuse.input();
+		aptuse.process();
+		aptuse.output();
 
 	} // main end
 
