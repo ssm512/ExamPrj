@@ -1,6 +1,7 @@
 package prj03;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -206,6 +207,7 @@ class MvReserve implements Ipo {
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + vo.getMvCode());
 			} // switch문 영화명 end
+			Collections.sort(movieList, (vo1, vo2) -> Double.compare(vo2.getTotKum(), vo1.getTotKum()));
 		} // for end
 	} // process() end
 
