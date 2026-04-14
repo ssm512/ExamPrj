@@ -23,7 +23,7 @@ public class sec03 {
 		boolean		result			=	(value%2==0) || (value%3==0);
 		if (!result) {
 			System.out.println("2또는 3의 배수가 아닌군요");
-		}// if 문 end
+			}// if 문 end
 		} // if 문 end
 	} // main end
 
