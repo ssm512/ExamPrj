@@ -40,6 +40,15 @@ public class sec06 {
 		}
 		System.out.println();
 		
+		//  배열 변수 선언과 배열 생성
+		String[]	arr3		=	new	String[3];
+		arr3[0]		=	"1월";
+		arr3[1]		=	"2월";
+		arr3[2]		=	"3월";
+		// 배열 항목의 초기값 출력
+		for (int i = 0; i < arr3.length; i++) {
+			System.out.println("arr3[ " + i + "] " + arr3[i] + ", ");
+		}
 	} // main end
 
 } // class sec06 end
