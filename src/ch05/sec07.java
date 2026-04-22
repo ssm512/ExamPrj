@@ -1,5 +1,6 @@
 package ch05;
 
+<<<<<<< HEAD
 import java.util.Iterator;
 
 public class sec07 {
@@ -48,6 +49,24 @@ public class sec07 {
 		}
 		double	totalAvg		=	(double) totalSum/totalStudent;
 		System.out.println("전체 학새의 평균 점수 : " + totalAvg);
+=======
+public class sec07 {
+
+	public static void main(String[] args) {
+		// array length example
+		//배열 변수 선언과 배열 대입
+		int	[]	scores	=	{ 84, 90, 96 };
+		 // 배열 항목의 총합 구하기
+		int		sum		=	0;
+		for (int i = 0; i < scores.length; i++) {
+			sum 	+=	scores[i];
+		}
+		System.out.println("총합 : " +  sum);
+		
+		// 배열 항목의 평균 구하기
+		double		avg		=	(double) sum/scores.length;
+		System.out.println("평균 : " + avg);
+>>>>>>> a1fc857081939b154b29d2df77a4875e2a701ad9
 	} // main end
 
 } // class sec07 end
