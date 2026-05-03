@@ -8,4 +8,4 @@ public class Car7 {
 	ch06.kumho.Tire	tire2	=	new ch06.kumho.Tire();
 	SnowTire tire3	=	new	SnowTire();
 	AllSeasonTire tire4 = new AllSeasonTire();
-}
+}  
